@@ -1,0 +1,20 @@
+.changeSize {
+	width:200px;
+	height:70px;
+	font-size:36px;
+}
+
+.nextQuestion	{
+	width: 100px;
+	height: 60px;
+	font-size:16px;
+	margin-top:10px;
+}
+
+.leftSide {
+	margin: 0 auto;
+}
+
+.attempts {
+	height:195px;
+}
