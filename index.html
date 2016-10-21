@@ -1,61 +1,68 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Quiz</title>
-		<meta charset='utf-8'>
+ <html>
+ 	<head>
+ 		<title>Quiz</title>
+ 		<meta charset='utf-8'>
 		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="style.css">
-	</head>
-	<body ng-app='quiz' ng-controller='guessController'>
+ 	</head>
+ 		<body ng-controller='guessController' ng-app='quiz'>
+ 			<div class="well">
+ 				<div class="text-center">
+ 					<h1>Quiz</h1>
+					<h3>You have 3 chances to guess the word</h3>
+					<button class="btn btn-success changeSize" ng-click="initGame()" ng-disabled="disableStartButton">START</button>
+ 				</div>
+ 			</div>
 
-		<div class="well">
-			<div class="text-center">
-				<h1>Quiz</h1>
-			</div>
-		</div>
+ 			<div class="row leftSide">
+ 				<div class="col-md-6">
+		 			<h2>Guess: {{chosenWord.description}}</h2>	
+					<div class="input-group">
+				    	<input type="text" class="form-control" ng-model="guess" ng-disabled="openInput" placeholder="Input word">
+				    	<span class="input-group-btn">
+				    	<button class="btn btn-warning" ng-disabled="lose || openInput" ng-hide="wordGuessed" ng-click="checkWord()">CHECK</button>
+				    	</span>
+				    </div>
+				    <h3>Number of attempt: {{guessNum}}/3</h3>
+ 				</div>
+ 				<div class="col-md-6 attempts">
 
-		<div class="row">
-			<div class="col-md-6">
-			
-				<h2>Question: {{chosenWord.description}}</h2>
+ 					<h3>Your attempts:</h3>
+ 					<ul class="list-group">
+ 						<!-- musiałem utworzyc zmienna tablicowa "empty", do ktorej przy kliknieciu zostaja dodane kolejne elementy -->
+ 							<li class="list-group-item list-group-item-info" ng-repeat="attempts in empty">{{ attempts  }}</li>
+ 						</li>
+ 					</ul>
+ 				
+ 				</div>
+ 			</div>
 
-				<hr>
-
-				<div class="input-group">
-					<input type="text" class="form-control" ng-model="guess">
-					<div class="input-group-btn">
-						<button class="btn btn-warning" ng-hide="wordGuessed" ng-show="showWarning" ng-click="checkWord()" ng-disabled="whatIf()">CHECK</button>
-					</div>
-				</div>
-				
-				<h4>Number of attempts: {{guessNum}}/3</h4>
-				<button class="btn btn-success" ng-click='initGame()'>RESTART</button>
-				
-				<hr>
-
-				<div class="alert alert-danger" role="alert" ng-show="showWarning">
-  					<p> {{ msgError }} </p>
-				</div>
-				
-			</div>
-			<div class="col-md-6" >
-				<div class="alert alert-success" role="alert" ng-show="showAnswer">
-					<h2 ng-show='wordGuessed'>Congratulations! The answer is: {{chosenWord.word}}</h2>
-				</div>
-		
-				<h3>Your attempts:</h3>
-				<ul>
-				<!-- musiałem utworzyc zmienna tablicowa "empty", do ktorej przy kliknieciu zostaja dodane kolejne elementy -->
-					<li class="well well-sm attempts" ng-repeat="attempts in empty"> {{ attempts }}</li>
-				</ul>
-			</div>
-		</div>
-	
-		<script src="node_modules/angular/angular.min.js"></script>	
+ 			<div class="row">
+ 				<div class="col-md-10">
+ 					<div class="text-center">
+ 						<div class="alert alert-danger" role="alert" ng-show="alertDanger">
+ 							<p> {{ msgError }} </p>	
+ 						</div>
+ 						
+ 						<div class="alert alert-danger" role="alert"  ng-show="lose">
+ 							<h2>You lost! Try again by pressing button NEXT</h2>
+						</div> 	
+						<div class="alert alert-success" role="alert" ng-show="wordGuessed">
+							<h2 >Congratulations! The answer is: {{chosenWord.word}}</h2>
+						</div>		
+ 					</div>
+ 				</div>
+ 				<div class="col-md-2">
+ 					<div class="text-center">
+ 						<button class="btn btn-info nextQuestion" ng-click="initGame()">NEXT</button>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		<script src="node_modules/angular/angular.min.js"></script>	
 		<script src="app.js"></script>
 		<script src="node_modules/jquery/dist/jquery.min.js"></script>	
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	</body>
-</html>
-
-<!-- problemem bylo nieodpowiednie nadanie ng-model dla inputa Część komponentów korzystała z app, a część z guess. -->
+ 		
+ 		</body>
+ </html>
