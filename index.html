@@ -1,95 +1,61 @@
 <!DOCTYPE html>
-<html data-ng-app='quiz'>
+<html>
 	<head>
 		<title>Quiz</title>
 		<meta charset='utf-8'>
-		<script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js'></script>
-		<script type="text/javascript">
-		var quiz = angular.module('quiz', []);
-		var model = [{
-			description: 'How to write DOG in polish?',
-			word: 'PIES'
-		},
-		{
-			description: 'How to write CAT in polish?',
-			word: 'KOT'
-		},
-		{
-			description: 'How to write TREE in polish?',
-			word: 'DRZEWO'
-		},
-		{
-			description: 'How to write COMPUTER in polish?',
-			word: 'KOMPUTER'
-		},
-		{
-			description: 'How to write ELEPHANT in polish?',
-			word: 'SŁOŃ'
-		}];
- 
-		quiz.controller('guessController', function($scope){
-			$scope.words = model;
-			
-			$scope.initGame = function(){
-				$scope.empty = [];
-				$scope.msgError = "";
-				$scope.guess = '';
-				$scope.guessNum = 0;
-				$scope.wordGuessed = false;
-				$scope.chosenWord = $scope.words[Math.floor(Math.random()*$scope.words.length)]
-			}
- 
-			$scope.checkWord = function(){
-
-				if(($scope.guess).toUpperCase() === $scope.chosenWord.word) {
-					$scope.wordGuessed = true;
-				} 
-				$scope.msgError = '';
-				if (!$scope.guess) {
-					$scope.msgError = "You have to type text before You check";
-					return;
-					
-				}
-				if ($scope.empty.indexOf($scope.guess) == -1) {
-            		$scope.empty.push($scope.guess);
-        		} else {
-            		$scope.msgError = "You tried this answer already.";
-            		return;
-            		
-        		}
-				
-				$scope.guessNum++;
-				$scope.guess = '';
-			}
-
-			$scope.whatIf = function() {	
-				if ($scope.guessNum >=10) {
-					$scope.msgError="You lost! Try again by pressing button START GAME";
-					return true;	
-				} else {
-					return false;
-				}
-			}
-
-			$scope.initGame();
-		})
-		</script>
+		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="style.css">
 	</head>
-		<body ng-controller='guessController'>
-			<h1>Quiz</h1>
-			<p>Hint: <i>{{chosenWord.description}}</i></p>
-			<input type='text' ng-model='guess'>
-			<input type='button' ng-hide='wordGuessed' ng-click='checkWord()' value='CHECK' ng-disabled="whatIf()"><br>
-			<p>Number of attempt: {{guessNum}}</p>
-			<input type='button' ng-click='initGame()' value='START GAME'><br>
-			<h2 ng-show='wordGuessed'>Congratulations! The answer is: {{chosenWord.word}}</h2>
-			<ul>
-				<p>Your attempts:</p>
+	<body ng-app='quiz' ng-controller='guessController'>
+
+		<div class="well">
+			<div class="text-center">
+				<h1>Quiz</h1>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+			
+				<h2>Question: {{chosenWord.description}}</h2>
+
+				<hr>
+
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="guess">
+					<div class="input-group-btn">
+						<button class="btn btn-warning" ng-hide="wordGuessed" ng-show="showWarning" ng-click="checkWord()" ng-disabled="whatIf()">CHECK</button>
+					</div>
+				</div>
+				
+				<h4>Number of attempts: {{guessNum}}/3</h4>
+				<button class="btn btn-success" ng-click='initGame()'>RESTART</button>
+				
+				<hr>
+
+				<div class="alert alert-danger" role="alert" ng-show="showWarning">
+  					<p> {{ msgError }} </p>
+				</div>
+				
+			</div>
+			<div class="col-md-6" >
+				<div class="alert alert-success" role="alert" ng-show="showAnswer">
+					<h2 ng-show='wordGuessed'>Congratulations! The answer is: {{chosenWord.word}}</h2>
+				</div>
+		
+				<h3>Your attempts:</h3>
+				<ul>
 				<!-- musiałem utworzyc zmienna tablicowa "empty", do ktorej przy kliknieciu zostaja dodane kolejne elementy -->
-				<li ng-repeat="x in empty"> {{ x }}</li>
-			</ul>
-			<p> {{ msgError }} </p>
-		</body>
+					<li class="well well-sm attempts" ng-repeat="attempts in empty"> {{ attempts }}</li>
+				</ul>
+			</div>
+		</div>
+	
+		<script src="node_modules/angular/angular.min.js"></script>	
+		<script src="app.js"></script>
+		<script src="node_modules/jquery/dist/jquery.min.js"></script>	
+		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	</body>
 </html>
 
 <!-- problemem bylo nieodpowiednie nadanie ng-model dla inputa Część komponentów korzystała z app, a część z guess. -->
