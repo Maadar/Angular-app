@@ -10,18 +10,37 @@
  			<div class="well">
  				<div class="text-center">
  					<h1>Quiz</h1>
-					<h3>You have 3 chances to guess the word</h3>
-					<button class="btn btn-success changeSize" ng-click="initGame()" ng-disabled="disableStartButton">START</button>
+					<h3>Translate from english to polish</h3>
+					
+					<!-- START BUTTON -->
+					<button 
+						class="btn btn-success changeSize" 
+						ng-click="initGame()" 
+						ng-disabled="disableStartButton"
+					>START</button>
  				</div>
  			</div>
 
  			<div class="row leftSide">
  				<div class="col-md-6">
-		 			<h2>Guess: {{chosenWord.description}}</h2>	
+		 			<h2>Translate: {{chosenWord.description}}</h2>	
 					<div class="input-group">
-				    	<input type="text" class="form-control" ng-model="guess" ng-disabled="openInput" placeholder="Input word">
+				    	<input type="text" 
+				    		class="form-control" 
+				    		ng-model="guess" 
+				    		ng-disabled="openInput" 
+				    		placeholder="Input word"
+				    		style="text-transform:lowercase"
+				    	>
 				    	<span class="input-group-btn">
-				    	<button class="btn btn-warning" ng-disabled="lose || openInput" ng-hide="wordGuessed" ng-click="checkWord()">CHECK</button>
+				    	
+						<!--CHECK BUTTON-->
+				    	<button 
+				    		class="btn btn-warning" 
+				    		ng-disabled="lose || openInput" 
+				    		ng-hide="wordGuessed" 
+				    		ng-click="checkWord()"
+				    	>CHECK</button>
 				    	</span>
 				    </div>
 				    <h3>Number of attempt: {{guessNum}}/3</h3>
@@ -31,13 +50,14 @@
  					<h3>Your attempts:</h3>
  					<ul class="list-group">
  						<!-- musiałem utworzyc zmienna tablicowa "empty", do ktorej przy kliknieciu zostaja dodane kolejne elementy -->
- 							<li class="list-group-item list-group-item-info" ng-repeat="attempts in empty">{{ attempts  }}</li>
+ 						<li class="list-group-item list-group-item-info" ng-repeat="attempts in empty">{{ attempts | lowercase }}</li>
+ 						<!-- ng repeat sprawia, ze zamiast dodawac elementy indywidualnie do tablicy, dodaja sie jako nowy element li, gdy tablica jest pusta, kolorowane tlo rowniez sie nie pojawia -->
  						</li>
  					</ul>
  				
  				</div>
  			</div>
-
+			
  			<div class="row">
  				<div class="col-md-10">
  					<div class="text-center">
@@ -46,16 +66,20 @@
  						</div>
  						
  						<div class="alert alert-danger" role="alert"  ng-show="lose">
- 							<h2>You lost! Try again by pressing button NEXT</h2>
+ 							<h2>You lost! Try again</h2>
 						</div> 	
+
 						<div class="alert alert-success" role="alert" ng-show="wordGuessed">
-							<h2 >Congratulations! The answer is: {{chosenWord.word}}</h2>
+							<h2 >Correct! {{chosenWord.word}} </h2>
 						</div>		
  					</div>
  				</div>
  				<div class="col-md-2">
  					<div class="text-center">
- 						<button class="btn btn-info nextQuestion" ng-click="initGame()">NEXT</button>
+ 						<button class="btn btn-info nextQuestion" ng-click="initGame()" ng-hide="nextButton">NEXT</button>
+ 					</div>
+ 					<div class="text-center">
+ 						<button class="btn btn-danger nextQuestion" ng-click="restartGame()" >RESTART</button>
  					</div>
  				</div>
  			</div>
