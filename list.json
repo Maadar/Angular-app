@@ -1,26 +1,52 @@
 [		
 	{
+		"id":"1",
  		"description": "DOG",
  		"word": "PIES"
  	},
  	{
+ 		"id":"2",
  		"description": "CAT",
  		"word": "KOT"
  	},
  	{
+ 		"id":"3",
  		"description": "TREE",
  		"word": "DRZEWO"
  	},
  	{
+ 		"id":"4",
  		"description": "COMPUTER",
  		"word": "KOMPUTER"
  	},
  	{
+ 		"id":"5",
  		"description": "ELEPHANT",
  		"word": "SŁOŃ"
  	},
- 	 	{
- 		"description": "HOUR",
- 		"word": "GODZINA"
+ 	 {
+ 	 	"id":"6",
+ 		"description": "SCOPE",
+ 		"word": "ZASIĘG"
+ 	},
+	{
+		"id":"7",
+ 		"description": "CELEBRATE",
+ 		"word": "ŚWIĘTOWAĆ"
+ 	},
+ 	{
+ 		"id":"8",
+ 		"description": "CONSIDER",
+ 		"word": "ROZWAŻAĆ"
+ 	},
+ 	{
+ 		"id":"9",
+ 		"description": "PHONE",
+ 		"word": "TELEFON"
+ 	},
+ 	{
+ 		"id":"10",
+ 		"description": "LACK",
+ 		"word": "BRAK"
  	}
 ]

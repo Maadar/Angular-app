@@ -1,1 +1,0 @@
-use npm install to install required files from package.json

@@ -17,7 +17,8 @@
 
  				$scope.openInput=true;
  				$scope.disableStartButton=false;
- 				$scope.nextButton=false;
+ 				$scope.nextButton=true;
+ 				$scope.isAlreadyDrawn = [];
  		
  			$scope.restartGame = function() {
  				$scope.disableStartButton=false;
@@ -31,6 +32,7 @@
  				$scope.chosenWord = "";
  				$scope.nextButton=true;
  				$scope.lose = false;
+ 				$scope.isAlreadyDrawn = [];
  			}
 
  			$scope.initGame = function(){
@@ -44,10 +46,34 @@
  				$scope.wordGuessed = false;
  				$scope.lose = false;
  				$scope.alertDanger = false;
- 				$scope.chosenWord = $scope.words[Math.floor(Math.random()*$scope.words.length)]
- 			
+				$scope.chosenWord = $scope.words[Math.floor(Math.random()*$scope.words.length)]
+				$scope.isWordDrawn();
+
  			}
-  
+
+ 			$scope.isWordDrawn = function(){		
+				if ($scope.isAlreadyDrawn.length == 9) {
+	         		$scope.nextButton=true;
+	         	}
+				if ($scope.isAlreadyDrawn.indexOf($scope.chosenWord.description) == -1) {
+            		$scope.isAlreadyDrawn.push($scope.chosenWord.description);
+            		console.log($scope.isAlreadyDrawn);
+         		} 
+         		else {
+         			do {
+         				console.log($scope.chosenWord.description);
+	         			for (i=0; i <= $scope.isAlreadyDrawn.length; i++) {
+	         				$scope.chosenWord = $scope.words[Math.floor(Math.random()*$scope.words.length)];
+	         				if ($scope.isAlreadyDrawn[i] === $scope.chosenWord.description) {
+	         					console.log($scope.chosenWord.description);
+	         				}
+	         			}
+	         		} while ($scope.isAlreadyDrawn.indexOf($scope.chosenWord.description) != -1);
+	         		$scope.isAlreadyDrawn.push($scope.chosenWord.description);
+	         		console.log($scope.isAlreadyDrawn);
+         		}
+  			}
+
  			$scope.checkWord = function(){
  				$scope.guessNum++;
  			
@@ -83,7 +109,7 @@
              		 if($scope.lose == true) {
  						$scope.alertDanger=false;
  					}
-             		return;	
+             	 		return;	
          		}
 
  				$scope.guess = "";
