@@ -21,9 +21,13 @@
         $scope.isAlreadyDrawn = [];
         $scope.wordGuessed = true;
         $scope.numberOfWords = 0;
+        $scope.numberOfCorrectAnswers = 0;
+        $scope.rules = true;
 
         //activities for "START" and "NEXT" button
         $scope.startGame = function() {
+        	$scope.rules = false;
+        	$scope.whenGuessWord = false;
         	$scope.wrapper = true;
         	$scope.wordsCounter = true;
         	$scope.restartAlert = false;
@@ -45,7 +49,8 @@
 
         //activities for reset button
         $scope.restartGame = function() {
-        	$scope.whenEveryWordsUsedAlert = false;
+        	$scope.finalAlertCorrect = false;
+        	$scope.finalAlertWrong = false;
         	$scope.restartButton = true;
             $scope.disableStartButton = false;
             $scope.isInputDisabled = true;
@@ -61,17 +66,15 @@
             $scope.isAlreadyDrawn = [];
             $scope.restartAlert = true;
             $scope.numberOfWords = 0;
+            $scope.whenGuessWord = false;
+            $scope.numberOfCorrectAnswers = 0;
         }
 
         // function checking if word is already used, if it is, don't draw it again
         // draw == wylosować
         $scope.isWordDrawn = function() {
             if ($scope.isAlreadyDrawn.length == 9) {
-            	$scope.whenEveryWordsUsedAlert = true;
                 $scope.nextButton = true;
-                $scope.isInputDisabled = true;
-                $scope.wordGuessed = true;
-                $scope.restartButton = false;
             }
             if ($scope.isAlreadyDrawn.indexOf($scope.chosenWord.description) == -1) {
                 $scope.isAlreadyDrawn.push($scope.chosenWord.description);
@@ -98,12 +101,29 @@
            	if (($scope.guess).toUpperCase() === $scope.chosenWord.word) {
             	$scope.isInputDisabled = true;
            	    $scope.whenGuessWord = true;
+           	    $scope.wordGuessed = true;
+           	    $scope.numberOfCorrectAnswers = $scope.numberOfCorrectAnswers +1;
+	           	if ($scope.numberOfWords == 10) {
+	           		$scope.whenGuessWord = false;
+	            	$scope.finalAlertCorrect = true;
+	            	$scope.restartButton = false;
+	            }
             }
 
             if ($scope.guessNum == 3) {
             	$scope.wordGuessed = true;
             	$scope.isInputDisabled = true;
                 $scope.loseAlert = true;
+                
+                if ($scope.numberOfWords == 10) {
+                	$scope.finalAlertWrong = true;
+	            	if ($scope.finalAlertWrong == true) {
+	            		$scope.loseAlert = false;
+	            		$scope.alertDanger = false;
+	            		$scope.restartButton = false;
+	            	}
+	            	return;
+	            }
 
                 if ($scope.whenGuessWord == true) {
                     $scope.loseAlert = false;

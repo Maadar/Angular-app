@@ -9,10 +9,13 @@
  	<body ng-controller='guessController' ng-app='quiz'>
 		<div class="well">
 			<div class="text-center">
-				<h1>Quiz</h1>
+				<h1>Check Your vocabulary</h1>
 				<h3>Translate from english to polish </h3>
+				<div class="rules" ng-show="rules">
+					<h3>You have 3 attempts to guess a word. Attempts will apear on right side. Words are randomly selected from the database. Click "NEXT" to go ahaed to the next word. Good Luck!</h3>
+				</div>
 				<div class="wordsCounter" ng-show="wordsCounter">
-					<h2">Word number: {{ numberOfWords }}</h2>
+					<h2>Correct answers: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}</h2>
 				</div>
 			<!-- START BUTTON -->
 				<button 
@@ -45,7 +48,7 @@
 				    	>CHECK</button>
 				    	</span>
 				    </div>
-				    <h3>Number of attempt: {{guessNum}}/3</h3>
+				    <h3>Attempt number: {{guessNum}}/3</h3>
  				</div>
  				<div class="col-md-6 attempts">
  					<h3>Your attempts:</h3>
@@ -66,18 +69,21 @@
  						</div>
  						
  						<div class="alert alert-danger" role="alert" ng-show="loseAlert">
- 							<h2>You did not guess correct. Go ahead to the next question</h2>
+ 							<h2>Correct answer is <q>{{ chosenWord.word }}.</q> Go ahead to the next question</h2>
 						</div> 	
 
 						<div class="alert alert-success" role="alert" ng-show="whenGuessWord">
-							<h2 >Correct! {{chosenWord.word}} </h2>
-						</div>	
-						<div class="alert alert-info" role="alert" ng-show="whenEveryWordsUsedAlert">
-							<h2>You checked every words already. Press "RESTART" to try again</h2>
+							<h2>Correct! <q>{{chosenWord.word}}</q></h2>
 						</div>	
 						<div class="alert alert-info" role="alert" ng-show="restartAlert">
 							<h2>Press "START"</h2>
 						</div>	
+						<div class="alert alert-info" ng-show="finalAlertCorrect">
+							<h2>Correct! <q>{{chosenWord.word}}</q>. Your result is: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}. Press "RESTART" to try again</h2>
+						</div>
+						<div class="alert alert-info" ng-show="finalAlertWrong">
+							<h2>Correct answer is <q>{{ chosenWord.word }}</q>. Your result is: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}. Press "RESTART" to try again</h2>
+						</div>
  					</div>
  				</div>
  				<div class="col-md-2">
