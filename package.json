@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Maadar/Angular-app#readme",
   "dependencies": {
     "angular": "^1.5.8",
+    "angular-route": "^1.6.0",
     "bootstrap": "^3.3.7",
     "jquery": "^3.1.1"
   }

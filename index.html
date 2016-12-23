@@ -1,39 +1,41 @@
 <!DOCTYPE html>
  <html>
  	<head>
- 		<title>Quiz</title>
+ 		<title>app</title>
  		<meta charset='utf-8'>
 		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="style.css">
  	</head>
- 	<body ng-controller='guessController' ng-app='quiz'>
+ 	<body data-ng-controller='guessController' data-ng-app='quiz'>
 		<div class="well">
+		<button class="btn btn-warning" data-ng-click="loadJson1()">Start</button>
+		<button class="btn btn-warning" data-ng-click="loadJson2()">Start</button>
 			<div class="text-center">
 				<h1>Check Your vocabulary</h1>
 				<h3>Translate from english to polish </h3>
-				<div class="rules" ng-show="rules">
+				<div class="rules" data-ng-show="rules">
 					<h3>You have 3 attempts to guess a word. Attempts will apear on right side. Words are randomly selected from the database. Click "NEXT" to go ahaed to the next word. Good Luck!</h3>
 				</div>
-				<div class="wordsCounter" ng-show="wordsCounter">
+				<div class="wordsCounter" data-ng-show="wordsCounter">
 					<h2>Correct answers: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}</h2>
 				</div>
 			<!-- START BUTTON -->
 				<button 
 					class="btn btn-success changeSize" 
-					ng-click="startGame()" 
-					ng-disabled="disableStartButton"
+					data-ng-click="startGame()" 
+					data-ng-disabled="disableStartButton"
 				>START</button>
 			</div>
 		</div>
-		<div class="wrapper" ng-show="wrapper">
+		<div class="wrapper" data-ng-show="wrapper">
  			<div class="row leftSide">
  				<div class="col-md-6">
 		 			<h2>Translate: {{chosenWord.description}}</h2>	
 					<div class="input-group">
 				    	<input type="text" 
 				    		class="form-control" 
-				    		ng-model="guess" 
-				    		ng-disabled="isInputDisabled" 
+				    		data-ng-model="guess" 
+				    		data-ng-disabled="isInputDisabled" 
 				    		placeholder="Input word"
 				    		style="text-transform:lowercase"
 				    	>
@@ -42,9 +44,9 @@
 						<!--CHECK BUTTON-->
 				    	<button 
 				    		class="btn btn-warning" 
-				    		ng-disabled="loseAlert || isInputDisabled" 
-				    		ng-hide="wordGuessed" 
-				    		ng-click="checkWord()"
+				    		data-ng-disabled="loseAlert || isInputDisabled" 
+				    		data-ng-hide="wordGuessed" 
+				    		data-ng-click="checkWord()"
 				    	>CHECK</button>
 				    	</span>
 				    </div>
@@ -54,7 +56,7 @@
  					<h3>Your attempts:</h3>
  					<ul class="list-group">
  						<!-- musiałem utworzyc zmienna tablicowa "empty", do ktorej przy kliknieciu zostaja dodane kolejne elementy -->
- 						<li class="list-group-item list-group-item-info" ng-repeat="attempts in empty">{{ attempts | lowercase }}</li>
+ 						<li class="list-group-item list-group-item-info" data-ng-repeat="attempts in empty">{{ attempts | lowercase }}</li>
  						<!-- ng repeat sprawia, ze zamiast dodawac elementy indywidualnie do tablicy, dodaja sie jako nowy element li, gdy tablica jest pusta, kolorowane tlo rowniez sie nie pojawia -->
  						</li>
  					</ul>
@@ -64,34 +66,34 @@
  			<div class="row">
  				<div class="col-md-10">
  					<div class="text-center">
- 						<div class="alert alert-danger" role="alert" ng-show="alertDanger">
+ 						<div class="alert alert-danger" role="alert" data-ng-show="alertDanger">
  							<p> {{ msgError }} </p>	
  						</div>
  						
- 						<div class="alert alert-danger" role="alert" ng-show="loseAlert">
+ 						<div class="alert alert-danger" role="alert" data-ng-show="loseAlert">
  							<h2>Correct answer is <q>{{ chosenWord.word }}.</q> Go ahead to the next question</h2>
 						</div> 	
 
-						<div class="alert alert-success" role="alert" ng-show="whenGuessWord">
+						<div class="alert alert-success" role="alert" data-ng-show="whenGuessWord">
 							<h2>Correct! <q>{{chosenWord.word}}</q></h2>
 						</div>	
-						<div class="alert alert-info" role="alert" ng-show="restartAlert">
+						<div class="alert alert-info" role="alert" data-ng-show="restartAlert">
 							<h2>Press "START"</h2>
 						</div>	
-						<div class="alert alert-info" ng-show="finalAlertCorrect">
+						<div class="alert alert-info" data-ng-show="finalAlertCorrect">
 							<h2>Correct! <q>{{chosenWord.word}}</q>. Your result is: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}. Press "RESTART" to try again</h2>
 						</div>
-						<div class="alert alert-info" ng-show="finalAlertWrong">
+						<div class="alert alert-info" data-ng-show="finalAlertWrong">
 							<h2>Correct answer is <q>{{ chosenWord.word }}</q>. Your result is: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}. Press "RESTART" to try again</h2>
 						</div>
  					</div>
  				</div>
  				<div class="col-md-2">
  					<div class="text-center">
- 						<button class="btn btn-info nextQuestion" ng-click="startGame()" ng-hide="nextButton">NEXT</button>
+ 						<button class="btn btn-info nextQuestion" data-ng-click="startGame()" data-ng-hide="nextButton">NEXT</button>
  					</div>
  					<div class="text-center">
- 						<button class="btn btn-danger nextQuestion" ng-click="restartGame()" ng-hide="restartButton" >RESTART</button>
+ 						<button class="btn btn-danger nextQuestion" data-ng-click="restartGame()" data-ng-hide="restartButton" >RESTART</button>
  					</div>
  				</div>
  			</div>
