@@ -1,0 +1,52 @@
+[		
+	{
+		"id":"1",
+ 		"description": "WINDY",
+ 		"word": "WIETRZNIE"
+ 	},
+ 	{
+ 		"id":"2",
+ 		"description": "FORECAST",
+ 		"word": "PROGNOZA"
+ 	},
+ 	{
+ 		"id":"3",
+ 		"description": "SUNNY",
+ 		"word": "SŁONECZNIE"
+ 	},
+ 	{
+ 		"id":"4",
+ 		"description": "SNOWU",
+ 		"word": "ŚNIEŻNIE"
+ 	},
+ 	{
+ 		"id":"5",
+ 		"description": "RAINBOW",
+ 		"word": "TĘCZA"
+ 	},
+ 	 {
+ 	 	"id":"6",
+ 		"description": "RAINY",
+ 		"word": "DESZCZOWO"
+ 	},
+	{
+		"id":"7",
+ 		"description": "HAIL",
+ 		"word": "GRAD"
+ 	},
+ 	{
+ 		"id":"8",
+ 		"description": "WIND",
+ 		"word": "WIATR"
+ 	},
+ 	{
+ 		"id":"9",
+ 		"description": "FROST",
+ 		"word": "MRÓZ"
+ 	},
+ 	{
+ 		"id":"10",
+ 		"description": "STORM",
+ 		"word": "SZTORM"
+ 	}
+]

@@ -1,176 +1,219 @@
 var quiz = angular.module('quiz', []);
 
-quiz.service("mainService", function($http, $q) {
-	var deferred = $q.defer(); // odraczać
-	$http.get('list.json').success(function(data) {
-		deferred.resolve(data);
-	});
-	this.getPlayers	= function() {
-		return deferred.promise;
-	}
+quiz.service("animalsService", function($http, $q) {
+    var deferred = $q.defer(); // odraczać
+    $http.get('animals.json').success(function(data) {
+        deferred.resolve(data);
+    });
+    this.getData = function() {
+        return deferred.promise;
+    }
 });
 
-quiz.controller('guessController', function($scope, mainService) {
-    var promise = mainService.getPlayers();
-    
-    $scope.loadJson1 = function () {
-	    promise.then(function(data) {
-	    	$scope.words = data;
-	    	console.log($scope.words);
-	    });
-	}
-    
-    $scope.loadJson2 = function () {
-	    promise.then(function(data) {
-	    	$scope.words = data;
-	    	console.log($scope.words);
-	    });
-	}
+quiz.service("foodService", function($http, $q) {
+    var deferred = $q.defer(); // odraczać
+    $http.get('food.json').success(function(data) {
+        deferred.resolve(data);
+    });
+    this.getData = function() {
+        return deferred.promise;
+    }
+});
 
-    //values of variables on the start of application
-    $scope.isInputDisabled = true;
-    $scope.disableStartButton = false;
-    $scope.restartButton = true;
-    $scope.nextButton = true;
+quiz.controller('guessController', function($scope, animalsService, foodService) {
+    var promiseAnimals = animalsService.getData();
+    var promiseFood = foodService.getData();
+    
+    //load json file by service after clcick the button
+    $scope.loadJson1 = function loadJson1 () {
+        promiseAnimals.then(function(data) {
+            $scope.words = data;
+            console.log($scope.words);
+        });
+    }
+    //load json file by service after clcick the button
+    $scope.loadJson2 = function () {
+        promiseFood.then(function(data) {
+            $scope.words = data;
+            console.log($scope.words);
+        });
+    }
+
+    //declare an object (set variables values)
+    var config = {
+        expandInput : true,
+        isOptionDisabled : true,
+        nextButton : true,
+        restartButton : true,
+        rules : true,
+        wordsCountContainer : true,
+        disableStartButton : false,
+        wrapper : false,
+        answersCounter : 0,
+        guessNum : 0,
+        numberOfWords : 0
+    };
+    $scope.config = config;
+
+    var alerts = {
+        infoAlert : false,
+        whenGuessWord : false,
+        loseAlert : false,
+        alertDanger : false,
+        finalAlertCorrect : false,
+        finalAlertWrong : false
+    };
+    $scope.alerts = alerts;
+
     $scope.isAlreadyDrawn = [];
-    $scope.wordGuessed = true;
-    $scope.numberOfWords = 0;
-    $scope.numberOfCorrectAnswers = 0;
-    $scope.rules = true;
 
     //activities for "START" and "NEXT" button
     $scope.startGame = function() {
-    	$scope.rules = false;
-    	$scope.whenGuessWord = false;
-    	$scope.wrapper = true;
-    	$scope.wordsCounter = true;
-    	$scope.restartAlert = false;
-        $scope.nextButton = false;
-        $scope.restartButton = true;
-        $scope.isInputDisabled = false;
-        $scope.disableStartButton = true;
+        config.isOptionDisabled = false;
+        config.disableStartButton = true;
+        config.restartButton = true;
+        config.nextButton = false;
+        config.expandInput = false;
+        config.rules = false;
+        config.numberOfWords = config.numberOfWords + 1;
+        config.wrapper = true;
+        config.wordsCountContainer = true;
+        config.guessNum = 0;
+        
+        alerts.whenGuessWord = false;
+        alerts.infoAlert = false;
+        alerts.loseAlert = false;
+        alerts.alertDanger = false;
+
         $scope.empty = [];
         $scope.msgError = "";
         $scope.guess = "";
-        $scope.guessNum = 0;
-        $scope.wordGuessed = false;
-        $scope.loseAlert = false;
-        $scope.alertDanger = false;
         $scope.chosenWord = $scope.words[Math.floor(Math.random() * $scope.words.length)]
         $scope.isWordDrawn();
-        $scope.numberOfWords = $scope.numberOfWords + 1;
     }
 
     //activities for reset button
     $scope.restartGame = function() {
-    	$scope.finalAlertCorrect = false;
-    	$scope.finalAlertWrong = false;
-    	$scope.restartButton = true;
-        $scope.disableStartButton = false;
-        $scope.isInputDisabled = true;
+        config.restartButton = true;
+        config.disableStartButton= false;
+        config.isOptionDisabled;
+        config.nextButton;
+        config.expandInput = true;
+        config.numberOfWords = 0;
+        config.answersCounter = 0;
+        config.guessNum = 0;
+        
+        alerts.infoAlert = true;
+        alerts.whenGuessWord = false;
+        alerts.loseAlert = false;
+        alerts.alertDanger = false;
+        alerts.finalAlertCorrect = false;
+        alerts.finalAlertWrong = false;
+        
         $scope.empty = [];
         $scope.msgError = "";
         $scope.guess = "";
-        $scope.guessNum = 0;
-        $scope.wordGuessed = true;
-        $scope.alertDanger = false;
         $scope.chosenWord = "";
-        $scope.nextButton = true;
-        $scope.loseAlert = false;
         $scope.isAlreadyDrawn = [];
-        $scope.restartAlert = true;
-        $scope.numberOfWords = 0;
-        $scope.whenGuessWord = false;
-        $scope.numberOfCorrectAnswers = 0;
     }
 
     // function checks if word is already used, if true, don't draw it again
     $scope.isWordDrawn = function() {
-	    $scope.isAlreadyDrawn.length == 9 && buttonVisibility();
-    	($scope.isAlreadyDrawn.indexOf($scope.chosenWord.description) == -1) ? whenWordUsed() : whenWordIsNotUsed()
+        $scope.isAlreadyDrawn.length == 9 && buttonVisibility();
+        
+        ($scope.isAlreadyDrawn.indexOf($scope.chosenWord.description) == -1) 
+        ? whenWordUsed() 
+        : whenWordIsNotUsed()
     }
 
     //activities for "CHECK" button
     $scope.checkWord = function() {
-        $scope.guessNum++;
-       	(($scope.guess).toUpperCase() === $scope.chosenWord.word) &&  whenWordGuessed();
-        $scope.guessNum == 3 && whenWordNotGuessed();
+        config.guessNum++;
+        (($scope.guess).toUpperCase() === $scope.chosenWord.word) &&  whenWordGuessed();
+        config.guessNum == 3 && whenWordNotGuessed();
+
         $scope.msgError = "";
+        alerts.alertDanger = false;
 
         if (!$scope.guess) {
             $scope.msgError = 'You did not input any data';
-            $scope.alertDanger = true;
+            alerts.alertDanger = true;
 
-            if ($scope.loseAlert == true) {
-                $scope.alertDanger = false;
+            if ((alerts.loseAlert == true) || (alerts.finalAlertWrong == true)) {
+                alerts.alertDanger = false;
             }
             return;
         }
 
-        ($scope.empty.indexOf($scope.guess) == -1) ? $scope.empty.push($scope.guess) : repeatedText()
+        ($scope.empty.indexOf($scope.guess) == -1) ? $scope.empty.push($scope.guess) : repeatedTextAlert()
+
+        $scope.guess = "";
     }
-	
-	//functions for isWordDrawn
+    
+    //functions for isWordDrawn
     function buttonVisibility() {
-    	 $scope.nextButton = true;
+        config.nextButton = true;
     }
     
     function whenWordUsed() {
-		$scope.isAlreadyDrawn.push($scope.chosenWord.description);
-		console.log($scope.isAlreadyDrawn);
+        $scope.isAlreadyDrawn.push($scope.chosenWord.description);
+        console.log($scope.isAlreadyDrawn);
     }
     
     function whenWordIsNotUsed() {
-    	do {
-		console.log($scope.chosenWord.description);
-			for (i = 0; i <= $scope.isAlreadyDrawn.length; i++) {
-			    $scope.chosenWord = $scope.words[Math.floor(Math.random() * $scope.words.length)];
-			    if ($scope.isAlreadyDrawn[i] === $scope.chosenWord.description) {
-			        console.log($scope.chosenWord.description);
-			    }
-			}
-		} while ($scope.isAlreadyDrawn.indexOf($scope.chosenWord.description) != -1);
-		$scope.isAlreadyDrawn.push($scope.chosenWord.description);
-		console.log($scope.isAlreadyDrawn);
+        do {
+        console.log($scope.chosenWord.description);
+            for (i = 0; i <= $scope.isAlreadyDrawn.length; i++) {
+                $scope.chosenWord = $scope.words[Math.floor(Math.random() * $scope.words.length)];
+                if ($scope.isAlreadyDrawn[i] === $scope.chosenWord.description) {
+                    console.log($scope.chosenWord.description);
+                }
+            }
+        } while ($scope.isAlreadyDrawn.indexOf($scope.chosenWord.description) != -1);
+        $scope.isAlreadyDrawn.push($scope.chosenWord.description);
+        console.log($scope.isAlreadyDrawn);
     }
-	
-	//functions for function checkWord
-	function whenWordGuessed() {
-		$scope.isInputDisabled = true;
-		$scope.whenGuessWord = true;
-		$scope.wordGuessed = true;
-		$scope.numberOfCorrectAnswers = $scope.numberOfCorrectAnswers +1;
-	
-		if ($scope.numberOfWords == 10) {
-			$scope.whenGuessWord = false;
-			$scope.finalAlertCorrect = true;
-			$scope.restartButton = false;
-		}
+    
+    //functions for function checkWord
+    function whenWordGuessed() {
+        config.isOptionDisabled = true;
+        config.expandInput = true;
+        config.answersCounter = config.answersCounter +1;
+        alerts.whenGuessWord = true;
+        alerts.alertDanger = false;
+    
+        if (config.numberOfWords == 10) {
+            alerts.whenGuessWord = false;
+            alerts.finalAlertCorrect = true;
+            config.restartButton = false;
+        }
    }
 
    function whenWordNotGuessed() {
-		$scope.wordGuessed = true;
-		$scope.isInputDisabled = true;
-		$scope.loseAlert = true;
+        config.expandInput = true;
+        config.isOptionDisabled = true;
+        alerts.loseAlert = true;
 
-		if ($scope.numberOfWords == 10) {
-			$scope.finalAlertWrong = true;
-				if ($scope.finalAlertWrong == true) {
-					$scope.loseAlert = false;
-					$scope.alertDanger = false;
-					$scope.restartButton = false;
-				}
-			return;
-		}
+        if (config.numberOfWords == 10) {
+            alerts.finalAlertWrong = true;
+            config.restartButton = false;
+            if (alerts.finalAlertWrong == true) {
+                alerts.loseAlert = false;
+            }
+            return;
+        }
 
-		if ($scope.whenGuessWord == true) {
-			$scope.loseAlert = false;
-		}
+        if (alerts.whenGuessWord == true) {
+            alerts.loseAlert = false;
+        }
     }
     
-    function repeatedText() {
-		$scope.msgError = 'Meh! You tried this answer already :(';
-		$scope.alertDanger = true;
-		($scope.loseAlert == true) ? $scope.alertDanger = false : $scope.alertDanger = true
-  	}
+    function repeatedTextAlert() {
+        $scope.msgError = 'Meh! You tried this answer already :(';
+        alerts.alertDanger = true;
+        
+        ((alerts.loseAlert == true) || (alerts.finalAlertWrong == true)) 
+        ? alerts.alertDanger = false 
+        : alerts.alertDanger = true
+    }
 })

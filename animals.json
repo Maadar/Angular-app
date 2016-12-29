@@ -1,0 +1,52 @@
+[		
+	{
+		"id":"1",
+ 		"description": "DOG",
+ 		"word": "PIES"
+ 	},
+ 	{
+ 		"id":"2",
+ 		"description": "CAT",
+ 		"word": "KOT"
+ 	},
+ 	{
+ 		"id":"3",
+ 		"description": "RAM",
+ 		"word": "BARAN"
+ 	},
+ 	{
+ 		"id":"4",
+ 		"description": "BEAVER",
+ 		"word": "BÓBR"
+ 	},
+ 	{
+ 		"id":"5",
+ 		"description": "BADGER",
+ 		"word": "BORSUK"
+ 	},
+ 	 {
+ 	 	"id":"6",
+ 		"description": "DOLPHIN",
+ 		"word": "DELFIN"
+ 	},
+	{
+		"id":"7",
+ 		"description": "WILD BOAR",
+ 		"word": "DZIK"
+ 	},
+ 	{
+ 		"id":"8",
+ 		"description": "LAMB",
+ 		"word": "JAGNIĘ"
+ 	},
+ 	{
+ 		"id":"9",
+ 		"description": "HEDGEHOG",
+ 		"word": "JEŻ"
+ 	},
+ 	{
+ 		"id":"10",
+ 		"description": "GOAT",
+ 		"word": "KOZA"
+ 	}
+]

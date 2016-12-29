@@ -8,26 +8,26 @@
  	</head>
  	<body data-ng-controller='guessController' data-ng-app='quiz'>
 		<div class="well">
-		<button class="btn btn-warning" data-ng-click="loadJson1()">Start</button>
-		<button class="btn btn-warning" data-ng-click="loadJson2()">Start</button>
+		<button class="btn btn-warning" data-ng-click="loadJson1()">Animals</button>
+		<button class="btn btn-warning" data-ng-click="loadJson2()">Food</button>
 			<div class="text-center">
 				<h1>Check Your vocabulary</h1>
 				<h3>Translate from english to polish </h3>
-				<div class="rules" data-ng-show="rules">
-					<h3>You have 3 attempts to guess a word. Attempts will apear on right side. Words are randomly selected from the database. Click "NEXT" to go ahaed to the next word. Good Luck!</h3>
+				<div class="rules" data-ng-show="config.rules">
+					<h3>You have 3 attempts to guess a word. Attempts will apear on right side. Words are randomly selected from the database. Drawn words do not appear again. Click "NEXT" to go ahaed to the next word. Good Luck!</h3>
 				</div>
-				<div class="wordsCounter" data-ng-show="wordsCounter">
-					<h2>Correct answers: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}</h2>
+				<div class="config.wordsCountContainer" data-ng-show="config.wordsCountContainer">
+					<h2>Correct answers: {{ config.answersCounter }}/{{ config.numberOfWords }}</h2>
 				</div>
 			<!-- START BUTTON -->
 				<button 
 					class="btn btn-success changeSize" 
 					data-ng-click="startGame()" 
-					data-ng-disabled="disableStartButton"
+					data-ng-disabled="config.disableStartButton"
 				>START</button>
 			</div>
 		</div>
-		<div class="wrapper" data-ng-show="wrapper">
+		<div class="wrapper" data-ng-show="config.wrapper">
  			<div class="row leftSide">
  				<div class="col-md-6">
 		 			<h2>Translate: {{chosenWord.description}}</h2>	
@@ -35,7 +35,7 @@
 				    	<input type="text" 
 				    		class="form-control" 
 				    		data-ng-model="guess" 
-				    		data-ng-disabled="isInputDisabled" 
+				    		data-ng-disabled="config.isOptionDisabled" 
 				    		placeholder="Input word"
 				    		style="text-transform:lowercase"
 				    	>
@@ -44,13 +44,13 @@
 						<!--CHECK BUTTON-->
 				    	<button 
 				    		class="btn btn-warning" 
-				    		data-ng-disabled="loseAlert || isInputDisabled" 
-				    		data-ng-hide="wordGuessed" 
+				    		data-ng-disabled="alerts.loseAlert || config.isOptionDisabled" 
+				    		data-ng-hide="config.expandInput" 
 				    		data-ng-click="checkWord()"
 				    	>CHECK</button>
 				    	</span>
 				    </div>
-				    <h3>Attempt number: {{guessNum}}/3</h3>
+				    <h3>Attempt number: {{config.guessNum}}/3</h3>
  				</div>
  				<div class="col-md-6 attempts">
  					<h3>Your attempts:</h3>
@@ -66,34 +66,32 @@
  			<div class="row">
  				<div class="col-md-10">
  					<div class="text-center">
- 						<div class="alert alert-danger" role="alert" data-ng-show="alertDanger">
+ 						<div class="alert alert-danger" role="alert" data-ng-show="alerts.alertDanger">
  							<p> {{ msgError }} </p>	
  						</div>
- 						
- 						<div class="alert alert-danger" role="alert" data-ng-show="loseAlert">
+ 						<div class="alert alert-danger" role="alert" data-ng-show="alerts.loseAlert">
  							<h2>Correct answer is <q>{{ chosenWord.word }}.</q> Go ahead to the next question</h2>
 						</div> 	
-
-						<div class="alert alert-success" role="alert" data-ng-show="whenGuessWord">
+						<div class="alert alert-success" role="alert" data-ng-show="alerts.whenGuessWord">
 							<h2>Correct! <q>{{chosenWord.word}}</q></h2>
 						</div>	
-						<div class="alert alert-info" role="alert" data-ng-show="restartAlert">
+						<div class="alert alert-info" role="alert" data-ng-show="alerts.infoAlert">
 							<h2>Press "START"</h2>
 						</div>	
-						<div class="alert alert-info" data-ng-show="finalAlertCorrect">
-							<h2>Correct! <q>{{chosenWord.word}}</q>. Your result is: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}. Press "RESTART" to try again</h2>
+						<div class="alert alert-info" data-ng-show="alerts.finalAlertCorrect">
+							<h2>Correct! <q>{{chosenWord.word}}</q>. Your result is: {{ config.answersCounter }}/{{ config.numberOfWords }}. Press "RESTART" to try again</h2>
 						</div>
-						<div class="alert alert-info" data-ng-show="finalAlertWrong">
-							<h2>Correct answer is <q>{{ chosenWord.word }}</q>. Your result is: {{ numberOfCorrectAnswers }}/{{ numberOfWords }}. Press "RESTART" to try again</h2>
+						<div class="alert alert-info" data-ng-show="alerts.finalAlertWrong">
+							<h2>Correct answer is <q>{{ chosenWord.word }}</q>. Your result is: {{ config.answersCounter }}/{{ config.numberOfWords }}. Press "RESTART" to try again</h2>
 						</div>
  					</div>
  				</div>
  				<div class="col-md-2">
  					<div class="text-center">
- 						<button class="btn btn-info nextQuestion" data-ng-click="startGame()" data-ng-hide="nextButton">NEXT</button>
+ 						<button class="btn btn-info nextQuestion" data-ng-click="startGame()" data-ng-hide="config.nextButton">NEXT</button>
  					</div>
  					<div class="text-center">
- 						<button class="btn btn-danger nextQuestion" data-ng-click="restartGame()" data-ng-hide="restartButton" >RESTART</button>
+ 						<button class="btn btn-danger nextQuestion" data-ng-click="restartGame()" data-ng-hide="config.restartButton" >RESTART</button>
  					</div>
  				</div>
  			</div>

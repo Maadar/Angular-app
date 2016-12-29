@@ -1,0 +1,52 @@
+[		
+	{
+		"id":"1",
+ 		"description": "APPLE PIE",
+ 		"word": "SZARLOTKA"
+ 	},
+ 	{
+ 		"id":"2",
+ 		"description": "BAGUETTE",
+ 		"word": "BAGIETKA"
+ 	},
+ 	{
+ 		"id":"3",
+ 		"description": "BAKER",
+ 		"word": "PIEKARZ"
+ 	},
+ 	{
+ 		"id":"4",
+ 		"description": "BARBECUE",
+ 		"word": "GRILOWAĆ"
+ 	},
+ 	{
+ 		"id":"5",
+ 		"description": "BEAN",
+ 		"word": "FASOLA"
+ 	},
+ 	 {
+ 	 	"id":"6",
+ 		"description": "BISCUIT",
+ 		"word": "HERBATNIK"
+ 	},
+	{
+		"id":"7",
+ 		"description": "BLUEBERRY",
+ 		"word": "JAGODA"
+ 	},
+ 	{
+ 		"id":"8",
+ 		"description": "CANTEEN",
+ 		"word": "STOŁÓWKA"
+ 	},
+ 	{
+ 		"id":"9",
+ 		"description": "CARROT",
+ 		"word": "MARCHEW"
+ 	},
+ 	{
+ 		"id":"10",
+ 		"description": "CABBAGE SOUP",
+ 		"word": "KAPUŚNIAK"
+ 	}
+]

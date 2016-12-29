@@ -1,0 +1,52 @@
+[		
+	{
+		"id":"1",
+ 		"description": "HANDBALL",
+ 		"word": "PIŁKA RĘCZNA"
+ 	},
+ 	{
+ 		"id":"2",
+ 		"description": "WEIGHTLIFTING",
+ 		"word": "PODNOSZENIE CIĘŻARÓW"
+ 	},
+ 	{
+ 		"id":"3",
+ 		"description": "FOOTBALL",
+ 		"word": "PIŁKA NOŻNA"
+ 	},
+ 	{
+ 		"id":"4",
+ 		"description": "VOLLEYBALL",
+ 		"word": "SIATKÓWKA"
+ 	},
+ 	{
+ 		"id":"5",
+ 		"description": "SKATING",
+ 		"word": "ŁYŻWIARSTWO"
+ 	},
+ 	 {
+ 	 	"id":"6",
+ 		"description": "BOBSLEIGH",
+ 		"word": "SANECZKARSTWO"
+ 	},
+	{
+		"id":"7",
+ 		"description": "FIELD HOKEY",
+ 		"word": "HOKEJ NA TRAWIE"
+ 	},
+ 	{
+ 		"id":"8",
+ 		"description": "BUNGEE JUMPING",
+ 		"word": "WIATR"
+ 	},
+ 	{
+ 		"id":"9",
+ 		"description": "CHESS",
+ 		"word": "SZACHY"
+ 	},
+ 	{
+ 		"id":"10",
+ 		"description": "DRAUGHTS",
+ 		"word": "WARCABY"
+ 	}
+]
